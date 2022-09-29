@@ -8,7 +8,11 @@ import { join } from 'path';
 export class TalentHubStack extends Stack {
 
   private api = new RestApi(this, 'TalentHubAPI')
-  private talentHubTable = new GenericTAble('TalentHubTable','talentId', this)
+  private talentHubTable = new GenericTAble(this, {
+    tableName: 'TalentHubTable',
+    primaryKey: 'spaceId',
+    createLambdaPath: 'Create'
+  })
 
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -23,6 +27,9 @@ export class TalentHubStack extends Stack {
     const helloLambdaResource = this.api.root.addResource('hello')
     helloLambdaResource.addMethod('GET', helloLambdaIntegration)
 
+    //Talent Hub API Integrations
+    const talentResource = this.api.root.addResource('talents')
+    talentResource.addMethod('POST', this.talentHubTable.createLambdaIntegration)
     
   }
 }

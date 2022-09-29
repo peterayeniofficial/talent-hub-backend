@@ -2,6 +2,7 @@ import {DynamoDB} from 'aws-sdk'
 import {APIGatewayProxyEvent, APIGatewayProxyResult, Context} from 'aws-lambda'
 import {v4} from 'uuid'
 
+const TABLE_NAME = process.env.TABLE_NAME
 const dbClient = new DynamoDB.DocumentClient()
 
 async function handler(event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult>{
@@ -13,7 +14,7 @@ async function handler(event: APIGatewayProxyEvent, context: Context): Promise<A
     item.talentId = v4()
     try{
         await dbClient.put({
-            TableName: 'TalentHubTable',
+            TableName: TABLE_NAME!,
             Item: item
         }).promise()
     }catch(error: any){
