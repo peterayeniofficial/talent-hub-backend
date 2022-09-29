@@ -2,3 +2,12 @@
 
 GET {{endpoint}}/hello/
 ###
+
+POST {{endpoint}}/talents/
+Content-Type: application/json
+
+{
+    "location": "London",
+    "name": "Chun Li"
+}
+###
