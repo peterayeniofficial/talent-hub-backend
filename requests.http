@@ -1,4 +1,4 @@
-@endpoint = https://weou01d8mi.execute-api.eu-west-2.amazonaws.com/prod/
+@endpoint = https://6f9de01324.execute-api.eu-west-3.amazonaws.com/prod/
 
 GET {{endpoint}}/hello/
 ###
