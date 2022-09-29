@@ -1,11 +1,10 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as lambda  from 'aws-cdk-lib/aws-lambda'
-import { Runtime, Code } from 'aws-cdk-lib/aws-lambda';
 import {LambdaIntegration, RestApi} from 'aws-cdk-lib/aws-apigateway'
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 
 import { GenericTAble } from './GenericTable';
-
+import { join } from 'path';
 export class TalentHubStack extends Stack {
 
   private api = new RestApi(this, 'TalentHubAPI')
@@ -14,10 +13,9 @@ export class TalentHubStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const hello = new lambda.Function(this, 'HelloHandler',{
-      runtime: Runtime.NODEJS_14_X,
-      code: Code.fromAsset('services'),
-      handler: 'hello.handler'
+    const hello = new NodejsFunction(this, 'HelloHandler',{
+      entry: (join(__dirname, '../','services', 'hello.ts')),
+      handler: 'hello'
     })
 
     // Hello Api lambda integration
