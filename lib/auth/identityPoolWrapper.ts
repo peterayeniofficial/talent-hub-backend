@@ -77,7 +77,7 @@ export class IdentityPoolWrapper {
         ),
       }
     );
-    this.authenticatedRole.addToPolicy(this.policies.uploadProfilePhoto);
+    // this.authenticatedRole.addToPolicy(this.policies.uploadProfilePhoto);
 
     this.unAuthenticatedRole = new Role(
       this.scope,
@@ -113,8 +113,8 @@ export class IdentityPoolWrapper {
       ),
     });
 
-    this.adminRole.addToPolicy(this.policies.uploadSpacePhotos);
-    this.adminRole.addToPolicy(this.policies.uploadProfilePhoto);
+    // this.adminRole.addToPolicy(this.policies.uploadTalentPhotos);
+    // this.adminRole.addToPolicy(this.policies.uploadProfilePhoto);
   }
 
   private attachRoles() {

@@ -5,7 +5,7 @@ export class Policies {
 
     private talentPhotosBucket: Bucket;
     private profilePhotosBucket: Bucket;
-    public uploadSpacePhotos: PolicyStatement;
+    public uploadTalentPhotos: PolicyStatement;
     public uploadProfilePhoto: PolicyStatement;
 
     constructor(talentPhotosBucket: Bucket, profilePhotosBucket: Bucket) {
@@ -15,7 +15,7 @@ export class Policies {
     }
 
     private initialize() {
-        this.uploadSpacePhotos = new PolicyStatement({
+        this.uploadTalentPhotos = new PolicyStatement({
             effect: Effect.ALLOW,
             actions: [
                 's3:PutObject',
