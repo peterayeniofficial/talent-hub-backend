@@ -22,8 +22,10 @@
     "typescript": "~3.9.7"
   },
   "dependencies": {
+    "@aws-amplify/auth": "^4.6.7",
     "@types/aws-lambda": "^8.10.106",
     "@types/uuid": "^8.3.4",
+    "aws-amplify": "^4.3.36",
     "aws-cdk-lib": "2.43.1",
     "aws-sdk": "^2.1225.0",
     "constructs": "^10.0.0"
