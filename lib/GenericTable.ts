@@ -10,6 +10,7 @@ export interface TableProps {
   readLambdaPath?: string;
   updateLambdaPath?: string;
   deleteLambdaPath?: string;
+  secondaryIndexes?: string[];
 }
 
 export class GenericTAble {
@@ -34,6 +35,7 @@ export class GenericTAble {
   }
   private initialise() {
     this.createTable();
+    this.addSecondaryIndexes();
     this.createLambdas();
     this.grantTableRights();
   }
@@ -46,6 +48,20 @@ export class GenericTAble {
       tableName: this.props.tableName,
       removalPolicy: RemovalPolicy.DESTROY,
     });
+  }
+
+  private addSecondaryIndexes() {
+    if (this.props.secondaryIndexes) {
+      for (const secondaryIndex of this.props.secondaryIndexes) {
+        this.table.addGlobalSecondaryIndex({
+          indexName: secondaryIndex,
+          partitionKey: {
+            name: this.props.primaryKey,
+            type: AttributeType.STRING,
+          },
+        });
+      }
+    }
   }
 
   private createSingleLambda(lambdaName: string): NodejsFunction {

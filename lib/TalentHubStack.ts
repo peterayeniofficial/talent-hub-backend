@@ -12,7 +12,10 @@ export class TalentHubStack extends Stack {
     tableName: 'TalentHubTable',
     primaryKey: 'talentId',
     createLambdaPath: 'Create',
-    readLambdaPath: 'read'
+    readLambdaPath: 'Read',
+    updateLambdaPath: 'Update',
+    deleteLambdaPath: 'Delete',
+    secondaryIndexes: ['location']
   })
 
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -32,6 +35,8 @@ export class TalentHubStack extends Stack {
     const talentResource = this.api.root.addResource('talents')
     talentResource.addMethod('POST', this.talentHubTable.createLambdaIntegration)
     talentResource.addMethod('Get', this.talentHubTable.readLambdaIntegration)
+    talentResource.addMethod('PUT', this.talentHubTable.updateLambdaIntegration)
+    talentResource.addMethod('DELETE', this.talentHubTable.deleteLambdaIntegration)
     
   }
 }

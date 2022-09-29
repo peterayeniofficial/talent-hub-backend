@@ -4,7 +4,11 @@ import {
   APIGatewayProxyResult,
   Context,
 } from "aws-lambda";
-import { v4 } from "uuid";
+import {
+  MissingFieldError,
+  validateAsTalentEntry,
+} from "../Shared/InputValidator";
+import { addCorsHeader, generateRandomId, getEventBody } from "../Shared/Utils";
 
 const TABLE_NAME = process.env.TABLE_NAME;
 const dbClient = new DynamoDB.DocumentClient();
@@ -17,20 +21,29 @@ async function handler(
     statusCode: 200,
     body: "Hello from DynamoDB",
   };
-  const item =
-    typeof event.body == "object" ? event.body : JSON.parse(event.body);
-  item.talentId = v4();
+
+  addCorsHeader(result)
+
   try {
+    const item = getEventBody(event)
+    item.talentId = generateRandomId();
+    validateAsTalentEntry(item);
     await dbClient
       .put({
         TableName: TABLE_NAME!,
         Item: item,
       })
       .promise();
+    result.body = JSON.stringify(`Created item with id: ${item.talentId}`);
   } catch (error: any) {
+    if( error instanceof MissingFieldError){
+        result.statusCode = 403
+    }else{
+        result.statusCode = 500
+    }
     result.body = error.message;
+    
   }
-  result.body = JSON.stringify(`Created item with id: ${item.talentId}`);
 
   return result;
 }

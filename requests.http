@@ -7,6 +7,9 @@ GET {{endpoint}}/hello/
 GET {{endpoint}}/talents?talentId=333222rre
 ###
 
+GET {{endpoint}}/talents?location=London
+###
+
 POST {{endpoint}}/talents/
 Content-Type: application/json
 
