@@ -10,8 +10,9 @@ export class TalentHubStack extends Stack {
   private api = new RestApi(this, 'TalentHubAPI')
   private talentHubTable = new GenericTAble(this, {
     tableName: 'TalentHubTable',
-    primaryKey: 'spaceId',
-    createLambdaPath: 'Create'
+    primaryKey: 'talentId',
+    createLambdaPath: 'Create',
+    readLambdaPath: 'read'
   })
 
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -30,6 +31,7 @@ export class TalentHubStack extends Stack {
     //Talent Hub API Integrations
     const talentResource = this.api.root.addResource('talents')
     talentResource.addMethod('POST', this.talentHubTable.createLambdaIntegration)
+    talentResource.addMethod('Get', this.talentHubTable.readLambdaIntegration)
     
   }
 }
