@@ -2,8 +2,12 @@ import { Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as lambda  from 'aws-cdk-lib/aws-lambda'
 import { Runtime, Code } from 'aws-cdk-lib/aws-lambda';
+import {LambdaIntegration, LambdaRestApi, RestApi} from 'aws-cdk-lib/aws-apigateway'
 
 export class TalentHubStack extends Stack {
+
+  private api = new RestApi(this, 'TalentHubAPI')
+
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
@@ -12,5 +16,12 @@ export class TalentHubStack extends Stack {
       code: Code.fromAsset('services'),
       handler: 'hello.handler'
     })
+
+    // Hello Api lambda integration
+    const helloLambdaIntegration = new LambdaIntegration(hello)
+    const helloLambdaResource = this.api.root.addResource('hello')
+    helloLambdaResource.addMethod('GET', helloLambdaIntegration)
+
+    
   }
 }
