@@ -1,3 +1,5 @@
-import {handler} from '../../services/TalentTable/Create'
+import {handler} from '../../services/TalentHubTable/Create'
 
-handler({} as any,{} as any)
+const result = handler({} as any,{} as any).then((apiResult) => {
+    const items = JSON.parse(apiResult.body)
+})
