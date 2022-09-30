@@ -34,7 +34,7 @@ async function handler(
         Item: item,
       })
       .promise();
-    result.body = JSON.stringify(`Created item with id: ${item.talentId}`);
+    result.body = JSON.stringify({id: item.talentId});
   } catch (error: any) {
     if( error instanceof MissingFieldError){
         result.statusCode = 403
